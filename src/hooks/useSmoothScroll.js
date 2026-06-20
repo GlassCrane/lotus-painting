@@ -18,6 +18,7 @@ export default function useSmoothScroll() {
       smoothWheel: true,
     })
 
+    lenis.scrollTo(0, { immediate: true })
     lenis.on('scroll', ScrollTrigger.update)
 
     const raf = (time) => lenis.raf(time * 1000)

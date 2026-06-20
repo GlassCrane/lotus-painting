@@ -17,16 +17,18 @@ export default function Services() {
         duration: 0.9,
         stagger: 0.12,
         ease: 'power3.out',
-        scrollTrigger: { trigger: '.services__head', start: 'top 80%' },
+        scrollTrigger: { trigger: '.services__head', start: 'top 82%', once: true },
       })
 
-      gsap.from('.svc', {
-        y: 70,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: { each: 0.08, grid: 'auto', from: 'start' },
-        scrollTrigger: { trigger: '.services__grid', start: 'top 78%' },
+      // Pure fade-in (no transform) so tiles can NEVER shift out of their grid
+      // position — eliminates the "uneven / didn't snap back" issue entirely.
+      gsap.set('.svc', { opacity: 0 })
+      gsap.to('.svc', {
+        opacity: 1,
+        duration: 0.7,
+        ease: 'power2.out',
+        stagger: 0.06,
+        scrollTrigger: { trigger: '.services__grid', start: 'top 88%', once: true },
       })
     },
     { scope: root }

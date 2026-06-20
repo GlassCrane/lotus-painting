@@ -88,7 +88,7 @@ export const PROJECTS = [
   },
   {
     id: 'p3',
-    title: 'Metallic Garage Floor',
+    title: 'High-Gloss Resin Floor',
     type: 'Epoxy Flooring',
     hue: 25,
     accent: '#5a3d24',

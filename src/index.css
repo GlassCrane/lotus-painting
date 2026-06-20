@@ -451,6 +451,8 @@ body::before {
 }
 .svc {
   position: relative;
+  display: flex;
+  flex-direction: column;
   padding: 2.2rem 2rem 2rem;
   border-radius: 16px;
   background: linear-gradient(165deg, rgba(37, 32, 26, 0.6), rgba(22, 19, 15, 0.6));
@@ -473,7 +475,7 @@ body::before {
   margin: 0.7rem 0 0.8rem;
 }
 .svc__blurb { color: var(--txt-dim); font-size: 0.96rem; }
-.svc__tags { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.4rem; }
+.svc__tags { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; padding-top: 1.4rem; }
 .svc__tags li {
   font-size: 0.7rem;
   letter-spacing: 0.06em;
@@ -525,7 +527,26 @@ body::before {
   background-size: cover;
   background-position: center;
   border: 1px solid rgba(226, 178, 76, 0.15);
+  cursor: zoom-in;
+  transition: border-color 0.4s var(--ease);
 }
+.work__media:hover { border-color: rgba(226, 178, 76, 0.5); }
+.work__zoom {
+  position: absolute;
+  top: 1.2rem; right: 1.4rem;
+  z-index: 2;
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  color: var(--gold-bright);
+  background: rgba(16, 14, 12, 0.5);
+  border: 1px solid rgba(226, 178, 76, 0.4);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.work__media:hover .work__zoom { opacity: 1; transform: scale(1); }
 /* Semi-transparent brand tint so the photo shows through while staying
    on-theme (charcoal + gold). If a photo is missing, the dark background-color
    below shows instead — still looks intentional. */
@@ -749,6 +770,110 @@ body::before {
   font-size: 0.82rem;
 }
 .footer__bottom a:hover { color: var(--gold); }
+
+/* =========================================================================
+   LIGHTBOX
+   ========================================================================= */
+.lb {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lb__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 7, 6, 0.93);
+  backdrop-filter: blur(8px);
+}
+.lb__figure {
+  position: relative;
+  margin: 0;
+  z-index: 1;
+  max-width: 90vw;
+  max-height: 86vh;
+  visibility: hidden;
+}
+.lb__img {
+  display: block;
+  max-width: 90vw;
+  max-height: 86vh;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 50px 130px -25px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(226, 178, 76, 0.25);
+  will-change: transform, opacity;
+  cursor: default;
+}
+.lb__cap {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 3rem 1.5rem 1.3rem;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+  background: linear-gradient(to top, rgba(8, 7, 6, 0.9), transparent);
+  pointer-events: none;
+}
+.lb__type { font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); }
+.lb__title { font-family: var(--font-serif); font-size: 1.7rem; color: var(--cream); margin-top: 0.3rem; }
+
+.lb__close, .lb__arrow {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  color: var(--gold-bright);
+  background: rgba(16, 14, 12, 0.45);
+  border: 1px solid rgba(226, 178, 76, 0.35);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s var(--ease), border-color 0.3s;
+}
+.lb__close:hover, .lb__arrow:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+.lb__close {
+  top: 1.6rem; right: 1.8rem;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+.lb__arrow {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  font-size: 2rem;
+  line-height: 1;
+  padding-bottom: 4px;
+}
+.lb__arrow:hover { transform: translateY(-50%) scale(1.08); }
+.lb__arrow--prev { left: 1.8rem; }
+.lb__arrow--next { right: 1.8rem; }
+.lb__counter {
+  position: absolute;
+  left: 50%;
+  bottom: 1.6rem;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-align: center;
+}
+.lb__count { font-family: var(--font-display); color: var(--gold-bright); letter-spacing: 0.15em; font-size: 0.95rem; }
+.lb__count i { color: var(--gold-deep); font-style: normal; margin: 0 0.2rem; }
+.lb__hint { font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--txt-faint); }
+
+@media (max-width: 640px) {
+  .lb__arrow { width: 44px; height: 44px; font-size: 1.5rem; }
+  .lb__arrow--prev { left: 0.7rem; }
+  .lb__arrow--next { right: 0.7rem; }
+  .lb__close { top: 1rem; right: 1rem; }
+  .lb__title { font-size: 1.3rem; }
+}
 
 /* =========================================================================
    RESPONSIVE
