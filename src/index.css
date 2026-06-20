@@ -526,22 +526,25 @@ body::before {
   background-position: center;
   border: 1px solid rgba(226, 178, 76, 0.15);
 }
-/* duotone fallback when no photo is present */
+/* Semi-transparent brand tint so the photo shows through while staying
+   on-theme (charcoal + gold). If a photo is missing, the dark background-color
+   below shows instead — still looks intentional. */
 .work__media::before {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 1;
   background:
-    linear-gradient(160deg, color-mix(in srgb, var(--accent) 70%, #000) 0%, var(--char) 100%);
-  z-index: 0;
+    linear-gradient(to top, rgba(16, 14, 12, 0.82) 0%, rgba(16, 14, 12, 0.1) 48%, rgba(16, 14, 12, 0.32) 100%),
+    linear-gradient(150deg, rgba(176, 127, 38, 0.24), transparent 55%);
 }
 .work__media::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(16, 14, 12, 0.85), transparent 55%),
-    radial-gradient(120% 70% at 50% 110%, rgba(226, 178, 76, 0.18), transparent 60%);
   z-index: 1;
+  background: radial-gradient(120% 70% at 50% 116%, rgba(226, 178, 76, 0.26), transparent 60%);
+  mix-blend-mode: screen;
 }
 .work__index {
   position: absolute;
