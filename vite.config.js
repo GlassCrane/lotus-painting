@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// Served from https://<user>.github.io/lotus-painting/ on GitHub Pages, so the
-// production build needs that base path. Local dev stays at root ('/').
-export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/lotus-painting/' : '/',
+// Served from the custom apex domain https://lotus-painting.com/, which lives at
+// the site root, so both dev and build use '/'.
+export default defineConfig(() => ({
+  base: '/',
   plugins: [react()],
   server: {
     port: 5173,
