@@ -20,7 +20,7 @@ export default function Lightbox({ items, startIndex, origin, onClose }) {
 
   const base = import.meta.env.BASE_URL
   const current = items[index]
-  const srcOf = (it) => `${base}work/${it.id}.jpg`
+  const srcOf = (it) => `${base}work/${it.image || `${it.id}.jpg`}`
 
   // Preload every image so wheel-browsing is instant.
   useEffect(() => {

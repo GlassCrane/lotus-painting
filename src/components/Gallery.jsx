@@ -85,7 +85,7 @@ export default function Gallery() {
               }}
               style={{
                 '--accent': p.accent,
-                backgroundImage: `url(${import.meta.env.BASE_URL}work/${p.id}.jpg)`,
+                backgroundImage: `url(${import.meta.env.BASE_URL}work/${p.image || `${p.id}.jpg`})`,
               }}
             >
               <span className="work__index">{String(i + 1).padStart(2, '0')}</span>
